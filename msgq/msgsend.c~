@@ -75,7 +75,7 @@ int main(void)
     {
         dbgLog(INFORM,"Msg: Hi, sent");
     }
-    sleep(50);
+    sleep(5);
 
     stopService(0);
     return 0;

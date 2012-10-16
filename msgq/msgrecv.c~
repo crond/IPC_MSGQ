@@ -12,7 +12,7 @@
 key_t keyValue;
 int msgQId;
 char dbgLogStr[256];
-
+char buffer[512];
 int dbgLog(int dbgLevel,char *log);
 int stopService(char flag);
 
@@ -66,17 +66,16 @@ int main(void)
     snprintf(dbgLogStr,sizeof(dbgLogStr),"%s: MSG Q ID:%d",fnName,msgQId);
     dbgLog(INFORM,dbgLogStr);
     errno =0;
-    if((msgsnd(msgQId,"Hi",3,IPC_NOWAIT)) < 0)
+    if((msgrcv(msgQId,buffer,sizeof(buffer),0,IPC_NOWAIT)) < 0)
     {
-        snprintf(dbgLogStr,sizeof(dbgLogStr),"%s:%s:%d msgsnd error:%d",__FILE__,fnName,__LINE__,errno);
+        snprintf(dbgLogStr,"%s:%s:%d msgrecv error:%d",__FILE__,fnName,__LINE__,errno);
         dbgLog(INFORM,dbgLogStr);
     }
     else
     {
-        dbgLog(INFORM,"Msg: Hi, sent");
+        snprintf(dbgLogStr,sizeof(dbgLogStr),"%s Msg Recvd: %s",fnName,buffer);
+        dbgLog(INFORM,dbgLogStr);
     }
-    sleep(50);
-
     stopService(0);
     return 0;
 }
