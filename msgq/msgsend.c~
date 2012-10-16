@@ -87,7 +87,7 @@ void *sighandler(int sigNum)
 }
 int printDetails(char flag)
 {
-	static char fnName[]="printDetails():";   
+	   
     struct msqid_ds mqSysStruct;
     errno =0;
     if( (msgctl(msgQId,MSG_STAT,&mqSysStruct)) < 0)
